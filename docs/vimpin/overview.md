@@ -8,54 +8,34 @@ title: Overview
 > Pin Vim/Neovim plugin specs to explicit commit hashes.
 
 [`gr1m0h/vimpin`](https://github.com/gr1m0h/vimpin) is a Go CLI that
-rewrites your existing plugin spec files to pin every plugin to a
-40-character commit hash, **inline**, while keeping a human-readable
-annotation of the original tag or branch.
+rewrites your `lazy.nvim` Lua specs so every plugin is pinned to a
+40-character commit, with the original tag or branch preserved as an
+inline comment.
 
-The approach extends the commit-pinning pattern that has become standard
-for CI workflows (`actions/checkout@<sha>`, `pinact`, `ratchet`) to the
-Lua spec files that Neovim plugin managers consume.
+## Install
 
-## Scope
+```bash
+go install github.com/gr1m0h/vimpin/cmd/vimpin@latest
+```
 
-vimpin aims to support the major Vim/Neovim plugin managers over time.
+Requires Go 1.24 and `git` on `$PATH`. vimpin shells out to
+`git ls-remote` for ref resolution — it does not call the GitHub REST
+API, so the 60 req/h unauthenticated REST quota does not apply.
+Private-repo credentials piggyback on local git (`git credential`,
+`gh auth setup-git`, SSH keys, …). Hosts other than `github.com` are
+not yet supported.
 
-**Currently only `lazy.nvim` Lua specs are supported.**
+## Why
 
-## Why pin
-
-`lazy.nvim` happily honours `commit = "..."` in your spec, but most people
-never reach for that field because there is no good update story without
-external tooling. So plugins stay on a floating HEAD (`:Lazy update` moves
-them) or on a `tag = "..."` that lazy.nvim resolves at install time but
-does not lock — both of which leave the supply chain undefended.
-
-vimpin makes the commit the source of truth, written directly into the
-Lua spec, with the original tag / branch preserved as a comment for both
-humans and Renovate to read.
-
-## Where the SHA is authoritative
-
-The **commit SHA on disk is authoritative.** Once a spec is in canonical
-form, vimpin will never change the SHA unless you explicitly ask via
-`--update`. The annotation comment is a derived artefact: it records which
-tag (or branch) the SHA was taken from. If the annotation drifts (someone
-hand-edited it, or upstream rewrote a tag), `--verify` corrects the
-annotation to match the SHA, never the other way around.
-
-This is the foundation of vimpin's supply-chain story: **the only path
-that moves an SHA forward is one the operator typed themselves.**
+`lazy.nvim` honours `commit = "..."` in any spec, but there's no built-in
+update story so most users leave plugins on a floating HEAD or a
+`tag = "..."` that resolves at install time but does not lock. vimpin
+makes the **commit on disk** authoritative — the only path that moves
+a SHA forward is `vimpin run --update` typed by the operator (or a
+Renovate PR explicitly merged).
 
 ## Non-goals
 
 - Replacing plugin managers — keep using `lazy.nvim`.
-- Managing lazy-load configuration (`event`, `cmd`, `keys`) — vimpin only
-  touches the pinning fields and the annotation comment.
+- Touching lazy-load configuration (`event`, `cmd`, `keys`).
 - Cryptographic verification of commit contents.
-
-## Next
-
-- [Installation](./installation.md)
-- [Quickstart](./quickstart.md)
-- [Canonical form](./canonical-form.md)
-- [Commands reference](./commands.md)
