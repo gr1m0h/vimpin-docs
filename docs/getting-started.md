@@ -17,7 +17,7 @@ vimpin run
 into [canonical form](./vimpin/canonical-form.md):
 
 ```lua
-{ "ggandor/leap.nvim", commit = "8a40d3aa...07b9079b" }, -- tag: v0.1.5
+{ "example/example.nvim", commit = "deadbeef...cafebabe" }, -- tag: v1.0.0
 ```
 
 ## 2. Gate CI on pinned specs
