@@ -29,14 +29,14 @@ function Hero() {
         <div className={styles.heroPreview}>
           <div className={styles.previewLabel}>Before</div>
           <CodeBlock language="lua" className={styles.previewBlock}>
-{`{ "ggandor/leap.nvim", tag = "v0.1.5" },`}
+{`{ "example/example.nvim", tag = "v1.0.0" },`}
           </CodeBlock>
           <div className={styles.previewArrow}>
             <code>vimpin run</code>
           </div>
           <div className={styles.previewLabel}>After</div>
           <CodeBlock language="lua" className={styles.previewBlock}>
-{`{ "ggandor/leap.nvim", commit = "8a40d3aa...07b9079b" }, -- tag: v0.1.5`}
+{`{ "example/example.nvim", commit = "deadbeef...cafebabe" }, -- tag: v1.0.0`}
           </CodeBlock>
         </div>
       </div>
