@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'vimpin',
   tagline: 'Pin Vim/Neovim plugin specs to explicit commit hashes',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.svg',
 
   url: 'https://vimpin.grimoh.net',
   baseUrl: '/',
@@ -33,7 +33,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: 'docs',
-          editUrl: 'https://github.com/gr1m0h/vimpin-docs/edit/main/',
+          editUrl: 'https://github.com/gr1m0h/vimpin-docs/edit/main/docs/',
         },
         blog: false,
         theme: {
@@ -48,7 +48,6 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/social-card.png',
     colorMode: {
       defaultMode: 'light',
       respectPrefersColorScheme: true,
