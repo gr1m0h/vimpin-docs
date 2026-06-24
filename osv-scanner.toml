@@ -1,0 +1,41 @@
+# osv-scanner ignore list
+#
+# Every entry below is a build-time / dev-server transitive dependency of
+# Docusaurus. None of them ship in the generated static site (the output of
+# `docusaurus build` is plain HTML/CSS/JS), so the advisories are not
+# reachable by site visitors. They also cannot be bumped in isolation:
+# Docusaurus pins these versions through its own dependency tree, and forcing
+# newer majors breaks the build (e.g. js-yaml 4 removes the `safeLoad` API
+# that gray-matter relies on).
+#
+# Real remediation is tracked by Renovate, which opens PRs as Docusaurus
+# releases versions with the fixed transitive deps. Drop the matching entry
+# here once the lockfile no longer resolves the vulnerable version.
+
+[[IgnoredVulns]]
+id = "GHSA-5c6j-r48x-rmvq"
+reason = "serialize-javascript (RCE) — build-time only, via copy-webpack-plugin/css-minimizer-webpack-plugin pinned by @docusaurus/bundler. Tracked by Renovate."
+
+[[IgnoredVulns]]
+id = "GHSA-qj8w-gfj5-8c6v"
+reason = "serialize-javascript (CPU DoS) — build-time only, via @docusaurus/bundler. Tracked by Renovate."
+
+[[IgnoredVulns]]
+id = "GHSA-w5hq-g745-h8pq"
+reason = "uuid (buffer bounds) — build-time only, via sockjs/webpack-dev-server. Tracked by Renovate."
+
+[[IgnoredVulns]]
+id = "GHSA-mx8g-39q3-5c79"
+reason = "webpack-dev-server — local dev server only, never used in CI or the published site. Tracked by Renovate."
+
+[[IgnoredVulns]]
+id = "GHSA-64mm-vxmg-q3vj"
+reason = "http-proxy-middleware — dev-server proxy only. Tracked by Renovate."
+
+[[IgnoredVulns]]
+id = "GHSA-q7cg-457f-vx79"
+reason = "joi (RangeError on deeply nested input) — build-time config validation only. Tracked by Renovate."
+
+[[IgnoredVulns]]
+id = "GHSA-h67p-54hq-rp68"
+reason = "js-yaml (quadratic DoS) — build-time only, via gray-matter; gray-matter requires js-yaml 3.x. Tracked by Renovate."
