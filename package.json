@@ -2,6 +2,12 @@
   "name": "vimpin-docs",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
+  "homepage": "https://vimpin.grimoh.net",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gr1m0h/vimpin-docs.git"
+  },
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
