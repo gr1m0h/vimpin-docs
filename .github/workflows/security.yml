@@ -32,6 +32,8 @@ jobs:
       pull-requests: write
   codeql:
     uses: gr1m0h/.github/.github/workflows/codeql-typescript.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
+    with:
+      node-version: 24
     permissions:
       contents: read
       security-events: write
