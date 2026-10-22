@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   npm-audit:
-    uses: gr1m0h/.github/.github/workflows/npm-audit.yml@606611298d9d15d547ac70dd3b9e9554f1316c08
+    uses: gr1m0h/.github/.github/workflows/npm-audit.yml@7d92bb5cbd33ab3c4bc3f1bd3a0ed14c7007966d
     # Node toolchains (e.g. Docusaurus) pull deep build-time dependency
     # trees where high-severity advisories with no upstream fix are common
     # and not reachable in the shipped output. Gate on `critical` so the
@@ -15,26 +15,26 @@ jobs:
     with:
       audit-level: critical
   osv-scan:
-    uses: gr1m0h/.github/.github/workflows/osv-scanner.yml@606611298d9d15d547ac70dd3b9e9554f1316c08
+    uses: gr1m0h/.github/.github/workflows/osv-scanner.yml@7d92bb5cbd33ab3c4bc3f1bd3a0ed14c7007966d
     permissions:
       contents: read
       security-events: write
   gitleaks:
-    uses: gr1m0h/.github/.github/workflows/gitleaks.yml@606611298d9d15d547ac70dd3b9e9554f1316c08
+    uses: gr1m0h/.github/.github/workflows/gitleaks.yml@7d92bb5cbd33ab3c4bc3f1bd3a0ed14c7007966d
     permissions:
       contents: read
       pull-requests: read
   dependency-review:
     if: github.event_name == 'pull_request' && github.event.repository.private == false
-    uses: gr1m0h/.github/.github/workflows/dependency-review.yml@606611298d9d15d547ac70dd3b9e9554f1316c08
+    uses: gr1m0h/.github/.github/workflows/dependency-review.yml@7d92bb5cbd33ab3c4bc3f1bd3a0ed14c7007966d
     permissions:
       contents: read
       pull-requests: read
   codeql:
-    uses: gr1m0h/.github/.github/workflows/codeql-typescript.yml@606611298d9d15d547ac70dd3b9e9554f1316c08
+    uses: gr1m0h/.github/.github/workflows/codeql-typescript.yml@7d92bb5cbd33ab3c4bc3f1bd3a0ed14c7007966d
     permissions:
       contents: read
       security-events: write
       actions: read
   actionlint:
-    uses: gr1m0h/.github/.github/workflows/actions-pin-lint.yml@606611298d9d15d547ac70dd3b9e9554f1316c08
+    uses: gr1m0h/.github/.github/workflows/actions-pin-lint.yml@7d92bb5cbd33ab3c4bc3f1bd3a0ed14c7007966d
