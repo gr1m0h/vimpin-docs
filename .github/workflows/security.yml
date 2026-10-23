@@ -13,7 +13,8 @@ jobs:
     # and not reachable in the shipped output. Gate on `critical` so the
     # security check stays actionable instead of perpetually red.
     with:
-      audit-level: critical
+      audit-level: high
+      node-version: "24.22.1"
   osv-scan:
     uses: gr1m0h/.github/.github/workflows/osv-scanner.yml@bfc0348f95a376b47e216b5136240e24d97dda8a
     permissions:
