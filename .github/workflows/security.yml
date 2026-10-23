@@ -2,37 +2,48 @@
 name: security
 on:
   pull_request:
-  workflow_dispatch:
 permissions:
   contents: read
 
 jobs:
   npm-audit:
-    uses: gr1m0h/.github/.github/workflows/npm-audit.yml@bfd9d34d379bce643b84d63b33abc6c6bc13227a
-    # Node toolchains (e.g. Docusaurus) pull deep build-time dependency
-    # trees where high-severity advisories with no upstream fix are common
-    # and not reachable in the shipped output. Gate on `critical` so the
-    # security check stays actionable instead of perpetually red.
+    uses: gr1m0h/.github/.github/workflows/npm-audit.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
     with:
-      audit-level: critical
+      audit-level: high
+      node-version: "24.22.1"
   osv-scan:
-    uses: gr1m0h/.github/.github/workflows/osv-scanner.yml@bfd9d34d379bce643b84d63b33abc6c6bc13227a
+    uses: gr1m0h/.github/.github/workflows/osv-scanner.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
     permissions:
       contents: read
       security-events: write
   gitleaks:
-    uses: gr1m0h/.github/.github/workflows/gitleaks.yml@bfd9d34d379bce643b84d63b33abc6c6bc13227a
+    uses: gr1m0h/.github/.github/workflows/gitleaks.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
   dependency-review:
     if: github.event_name == 'pull_request'
-    uses: gr1m0h/.github/.github/workflows/dependency-review.yml@bfd9d34d379bce643b84d63b33abc6c6bc13227a
+    uses: gr1m0h/.github/.github/workflows/dependency-review.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
     permissions:
       contents: read
       pull-requests: write
   codeql:
-    uses: gr1m0h/.github/.github/workflows/codeql-typescript.yml@bfd9d34d379bce643b84d63b33abc6c6bc13227a
+    uses: gr1m0h/.github/.github/workflows/codeql-typescript.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
+    with:
+      node-version: "24.22.1"
     permissions:
       contents: read
       security-events: write
       actions: read
   actionlint:
-    uses: gr1m0h/.github/.github/workflows/actions-pin-lint.yml@bfd9d34d379bce643b84d63b33abc6c6bc13227a
+    uses: gr1m0h/.github/.github/workflows/actions-pin-lint.yml@36ef61c694af64cabd7a2d1fae60d6386a97386e
+
+  build-and-security-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24.22.1"
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit
+      - run: npm run test:security
+      - run: npm run typecheck
+      - run: npm run build
